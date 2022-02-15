@@ -3,7 +3,7 @@ import React from 'react';
 function Login() {
   return (
     <form className="auth__form">
-      <h2 className="auth__title">Регистрация</h2>
+      <h2 className="auth__title">Вход</h2>
       <input
         className="auth__input"
         placeholder="Email"

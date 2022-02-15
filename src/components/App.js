@@ -9,7 +9,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import Login from './Login';
+import Register from './Register';
 
 function App() {
 
@@ -161,7 +161,6 @@ function App() {
           isOpen={selectedCard.isImageOpen}
           onClose={closeAllPopups}
         />
-        <Login />
       </div>
     </CurrentUserContext.Provider>
   );

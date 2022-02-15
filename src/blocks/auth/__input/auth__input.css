@@ -12,6 +12,7 @@
   margin: 30px auto 0;
   background-color: transparent;
   padding-bottom: 13px;
+  color: #CCCCCC;
 }
 
 .auth__input:first-child{
