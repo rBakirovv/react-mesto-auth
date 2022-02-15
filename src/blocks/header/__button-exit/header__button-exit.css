@@ -1,0 +1,15 @@
+.header__button-exit {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: right;
+  margin: 51px 0 0;
+  color: #A9A9A9;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 56px;
+  height: 22px;
+}
