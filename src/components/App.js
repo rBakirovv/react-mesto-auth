@@ -9,6 +9,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Login from './Login';
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState('');
   const [cards, setCards] = useState([]);
+
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     api.getUserInfo()
@@ -115,7 +118,9 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body__container">
-        <Header />
+        <Header
+          loggedIn={loggedIn}
+        />
         <Main
           onEditProfile={handleEditProfileClick}
           onEditAvatar={handleEditAvatarClick}
@@ -156,6 +161,7 @@ function App() {
           isOpen={selectedCard.isImageOpen}
           onClose={closeAllPopups}
         />
+        <Login />
       </div>
     </CurrentUserContext.Provider>
   );
