@@ -9,13 +9,16 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import Register from './Register';
+import Succses from '../images/succses.png';
+import Unsuccses from '../images/unsuccses.png';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const isOpen = true;
 
   const [currentUser, setCurrentUser] = useState('');
   const [cards, setCards] = useState([]);
