@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import '../index.css'
 import Main from './Main';
 import Footer from './Footer';
@@ -12,13 +13,15 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Succses from '../images/succses.png';
 import Unsuccses from '../images/unsuccses.png';
 import InfoTooltip from './InfoTooltip';
+import Register from './InfoTooltip';
+import Login from './Login';
+import ProtectedRoute from './Register';
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const isOpen = true;
 
   const [currentUser, setCurrentUser] = useState('');
   const [cards, setCards] = useState([]);
@@ -124,15 +127,28 @@ function App() {
         <Header
           loggedIn={loggedIn}
         />
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onEditAvatar={handleEditAvatarClick}
-          onAddPlace={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-        />
+        <Switch>
+          <ProtectedRoute
+            exact path={'/'}
+            loggedIn={loggedIn}
+          >
+            <Main
+              onEditProfile={handleEditProfileClick}
+              onEditAvatar={handleEditAvatarClick}
+              onAddPlace={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              cards={cards}
+            />
+          </ProtectedRoute>
+          <Route path="/sign-up">
+            <Register />
+          </Route>
+          <Route path="/sign-in">
+            <Login />
+          </Route>
+        </Switch>
         <Footer />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
