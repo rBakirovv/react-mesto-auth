@@ -1,21 +1,41 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 
-function Register() {
+export default function Register({handleRegistration}) {
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setData({
+      ...data,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    handleRegistration(data);
+  };
+
   return (
-    <form className="auth__form">
+    <form className="auth__form" onSubmit={handleSubmit}>
       <h2 className="auth__title">Регистрация</h2>
       <input
         className="auth__input"
         placeholder="Email"
         type="email"
-        name="email">
+        name="email"
+        onChange={handleChange}>
       </input>
       <input
         className="auth__input"
         placeholder="Пароль"
         type="password"
-        name="password">
+        name="password"
+        onChange={handleChange}>
       </input>
       <button className="auth__submit-button">Зарегистрироваться</button>
       <div className="auth__container">
@@ -26,5 +46,3 @@ function Register() {
 
   )
 }
-
-export default Register;

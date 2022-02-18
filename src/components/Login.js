@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Login() {
+export default function Login() {
   return (
     <form className="auth__form">
       <h2 className="auth__title">Вход</h2>
@@ -20,5 +20,3 @@ function Login() {
     </form>
   )
 }
-
-export default Login;

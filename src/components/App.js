@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import '../index.css'
 import Main from './Main';
 import Footer from './Footer';
@@ -13,9 +13,10 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Succses from '../images/succses.png';
 import Unsuccses from '../images/unsuccses.png';
 import InfoTooltip from './InfoTooltip';
-import Register from './InfoTooltip';
+import Register from './Register';
 import Login from './Login';
-import ProtectedRoute from './Register';
+import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../utils/auth';
 
 function App() {
 
@@ -26,7 +27,13 @@ function App() {
   const [currentUser, setCurrentUser] = useState('');
   const [cards, setCards] = useState([]);
 
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [infoImage, setInfoImage] = useState('');
+  const [infoTitle, setInfoTitle] = useState('');
+
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     api.getUserInfo()
@@ -46,6 +53,23 @@ function App() {
       })
   }, []);
 
+  function handleRegistration(data) {
+    auth
+      .register(data.password, data.email)
+      .then(() => {
+        setInfoImage(Succses);
+        setInfoTitle('Вы успешно зарегистрировались!');
+        handleAuthButtonClick();
+        history.push("/sign-in");
+      })
+      .catch((err) => {
+        setInfoImage(Unsuccses);
+        setInfoTitle('Что-то пошло не так! Попробуйте ещё раз.');
+        handleAuthButtonClick();
+        console.log(err)
+      });
+  };
+
   const [selectedCard, setSelectedCard] = useState({
     isImageOpen: false,
     link: '',
@@ -64,10 +88,15 @@ function App() {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
   };
 
+  function handleAuthButtonClick() {
+    setIsInfoTooltipOpen(!isInfoTooltipOpen);
+  };
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsInfoTooltipOpen(false);
     setSelectedCard({ isImageOpen: false, link: '', name: '' })
   };
 
@@ -143,7 +172,7 @@ function App() {
             />
           </ProtectedRoute>
           <Route path="/sign-up">
-            <Register />
+            <Register handleRegistration={handleRegistration} />
           </Route>
           <Route path="/sign-in">
             <Login />
@@ -180,6 +209,12 @@ function App() {
           isOpen={selectedCard.isImageOpen}
           onClose={closeAllPopups}
         />
+        <InfoTooltip
+          name='infotooltip'
+          image={infoImage}
+          title={infoTitle}
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups} />
       </div>
     </CurrentUserContext.Provider>
   );
