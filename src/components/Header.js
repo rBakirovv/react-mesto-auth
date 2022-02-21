@@ -7,8 +7,8 @@ function Header(props) {
             <div className="header__login-container">
                 {props.loggedIn && (
                     <>
-                        <p className="header__user-mail">email@mail.com</p>
-                        <button className="header__button">Выйти</button>
+                        <p className="header__user-mail">{props.userEmail}</p>
+                        <button className="header__button" onClick={props.onLogOut}>Выйти</button>
                     </>
                 )}
             </div>

@@ -8,26 +8,17 @@ const HEADERS = {
 export const register = (password, email) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers: HEADERS,
     body: JSON.stringify({password, email})
   })
-  .then((response) => {
-    return response.json();
-  })
-  .then((res) => {
-    return res;
-  })
-  .catch((err) => console.log(err));
+  .then(errorHandler)
 };
 
-export const authorize = (email, password) => {
-  return fetch(`${BASE_URL}/singin`, {
+export const authorize = (password, email) => {
+  return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: HEADERS,
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ password, email })
   })
     .then(errorHandler)
 };
@@ -36,7 +27,7 @@ export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
-      HEADERS,
+      ...HEADERS,
       'Authorization': `Bearer ${token}`,
     }
   })

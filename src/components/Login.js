@@ -1,22 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function Login() {
+export default function Login({hadnleAuthorization}) {
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setData({
+      ...data,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    hadnleAuthorization(data);
+  };
+
   return (
-    <form className="auth__form">
+    <form className="auth__form" onSubmit={handleSubmit}>
       <h2 className="auth__title">Вход</h2>
       <input
         className="auth__input"
         placeholder="Email"
         type="email"
-        name="email">
+        name="email"
+        onChange={handleChange}>
       </input>
       <input
         className="auth__input"
         placeholder="Пароль"
         type="password"
-        name="password">
+        name="password"
+        onChange={handleChange}>
       </input>
-      <button className="auth__submit-button">Войти</button>
+      <button type="submit" className="auth__submit-button">Войти</button>
     </form>
   )
 }

@@ -33,6 +33,8 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const [email, setEmail] = useState('');
+
   const history = useHistory();
 
   useEffect(() => {
@@ -68,6 +70,43 @@ function App() {
         handleAuthButtonClick();
         console.log(err)
       });
+  };
+
+  function hadnleAuthorization(data) {
+    auth
+      .authorize(data.password, data.email)
+      .then((data) => {
+        localStorage.setItem('jwt', data.token);
+        setLoggedIn(true)
+        history.push("/");
+      })
+      .catch((err) => {
+        setInfoImage(Unsuccses);
+        setInfoTitle('Что-то пошло не так! Попробуйте ещё раз.');
+        console.log(err)
+      });
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      const token = localStorage.getItem('jwt');
+      auth
+        .checkToken(token)
+        .then((res) => {
+          setLoggedIn(true);
+          setEmail(res.data.email);
+          history.push("/");
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
+
+  function handleLogOut() {
+    setLoggedIn(false);
+    localStorage.removeItem('jwt');
+    history.push("/");
   };
 
   const [selectedCard, setSelectedCard] = useState({
@@ -155,6 +194,8 @@ function App() {
       <div className="body__container">
         <Header
           loggedIn={loggedIn}
+          onLogOut={handleLogOut}
+          userEmail={email}
         />
         <Switch>
           <ProtectedRoute
@@ -175,7 +216,7 @@ function App() {
             <Register handleRegistration={handleRegistration} />
           </Route>
           <Route path="/sign-in">
-            <Login />
+            <Login hadnleAuthorization={hadnleAuthorization} />
           </Route>
         </Switch>
         <Footer />

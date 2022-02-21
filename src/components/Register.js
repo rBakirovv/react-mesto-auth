@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 
 export default function Register({handleRegistration}) {
 
@@ -37,10 +38,10 @@ export default function Register({handleRegistration}) {
         name="password"
         onChange={handleChange}>
       </input>
-      <button className="auth__submit-button">Зарегистрироваться</button>
+      <button type="submit" className="auth__submit-button">Зарегистрироваться</button>
       <div className="auth__container">
         <p className="auth__subtitle">Уже зарегистрированы?</p>
-        <a href='#' className="auth__link">Войти</a>
+        <Link to='/sign-in' className="auth__link">Войти</Link>
       </div>
     </form>
 
