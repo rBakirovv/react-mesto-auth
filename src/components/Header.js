@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Link } from "react-router-dom";
 
 function Header(props) {
     return (
@@ -8,9 +9,19 @@ function Header(props) {
                 {props.loggedIn && (
                     <>
                         <p className="header__user-mail">{props.userEmail}</p>
-                        <button className="header__button" onClick={props.onLogOut}>Выйти</button>
+                        <Link to="/sign-in" className="header__logout-link" onClick={props.onLogOut}>Выйти</Link>
                     </>
                 )}
+                <Route path="/sign-in">
+                    <Link to="/sign-up" className="header__link">
+                        Регистрация
+                    </Link>
+                </Route>
+                <Route path="/sign-up">
+                    <Link to="/sign-in" className="header__link">
+                        Войти
+                    </Link>
+                </Route>
             </div>
         </header>
     )

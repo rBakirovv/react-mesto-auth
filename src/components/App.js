@@ -75,8 +75,9 @@ function App() {
   function hadnleAuthorization(data) {
     auth
       .authorize(data.password, data.email)
-      .then((data) => {
-        localStorage.setItem('jwt', data.token);
+      .then((res) => {
+        localStorage.setItem('jwt', res.token);
+        setEmail(data.email)
         setLoggedIn(true)
         history.push("/");
       })
