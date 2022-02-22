@@ -40,10 +40,10 @@ function EditProfilePopup(props) {
       children={
         <>
           <input className="popup__field popup__field-name" id="popup__field-name" name="name" type="text" required
-            minLength="2" maxLength="40" placeholder="Имя" onChange={handleInputChange} />
+            minLength="2" maxLength="40" placeholder="Имя" onChange={handleInputChange} value={name || " "} />
           <span id="popup__field-name-error" className="popup__error"></span>
           <input className="popup__field popup__field-status" id="popup__field-status" name="about" type="text" required
-            minLength="2" maxLength="200" placeholder="О себе" onChange={handleInputChange} />
+            minLength="2" maxLength="200" placeholder="О себе" onChange={handleInputChange} value={description || " "}/>
           <span id="popup__field-status-error" className="popup__error"></span>
         </>
       }
