@@ -11,7 +11,7 @@ export const register = (password, email) => {
     headers: HEADERS,
     body: JSON.stringify({password, email})
   })
-  .then(errorHandler)
+  .then(checkResponse)
 };
 
 export const authorize = (password, email) => {
@@ -20,7 +20,7 @@ export const authorize = (password, email) => {
     headers: HEADERS,
     body: JSON.stringify({ password, email })
   })
-    .then(errorHandler)
+    .then(checkResponse)
 };
 
 export const checkToken = (token) => {
@@ -31,10 +31,10 @@ export const checkToken = (token) => {
       'Authorization': `Bearer ${token}`,
     }
   })
-    .then(errorHandler)
+    .then(checkResponse)
 };
 
-const errorHandler = (res) => {
+const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   } else {

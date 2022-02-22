@@ -9,7 +9,7 @@ class Api {
       method: 'GET',
       headers: this._headers
     })
-      .then(this._errorHandler);
+      .then(this._checkResponse);
   };
 
   getUserInfo() {
@@ -17,7 +17,7 @@ class Api {
       method: 'GET',
       headers: this._headers
     })
-      .then(this._errorHandler);
+      .then(this._checkResponse);
   };
 
   setUserInfo(data) {
@@ -29,7 +29,7 @@ class Api {
         about: data.about
       })
     })
-      .then(this._errorHandler);
+      .then(this._checkResponse);
   };
 
   setUserAvatar(data) {
@@ -40,7 +40,7 @@ class Api {
         avatar: data.avatar
       })
     })
-      .then(this._errorHandler);
+      .then(this._checkResponse);
   };
 
   createNewCard(data) {
@@ -52,7 +52,7 @@ class Api {
         link: data.link
       })
     })
-      .then(this._errorHandler);
+      .then(this._checkResponse);
   };
 
   deleteCard(_id) {
@@ -60,7 +60,7 @@ class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(this._errorHandler);
+      .then(this._checkResponse);
   };
 
   changeLikeCardStatus(_id, isLiked) {
@@ -68,7 +68,7 @@ class Api {
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: this._headers,
     })
-      .then(this._errorHandler);
+      .then(this._checkResponse);
   };
 
   getAppInfo() {
@@ -78,7 +78,7 @@ class Api {
     ]);
   };
 
-  _errorHandler(res) {
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     } else {

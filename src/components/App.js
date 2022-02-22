@@ -10,8 +10,8 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import Succses from '../images/succses.png';
-import Unsuccses from '../images/unsuccses.png';
+import success from '../images/succses.png';
+import unsuccess from '../images/unsuccses.png';
 import InfoTooltip from './InfoTooltip';
 import Register from './Register';
 import Login from './Login';
@@ -25,7 +25,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
@@ -46,7 +46,9 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+  }, []);
 
+  useEffect(() => {
     api.getInitialCards()
       .then(data => {
         setCards(data)
@@ -60,20 +62,20 @@ function App() {
     auth
       .register(data.password, data.email)
       .then(() => {
-        setInfoImage(Succses);
+        setInfoImage(success);
         setInfoTitle('Вы успешно зарегистрировались!');
-        handleAuthButtonClick();
+        openTooltip();
         history.push("/sign-in");
       })
       .catch((err) => {
-        setInfoImage(Unsuccses);
+        setInfoImage(unsuccess);
         setInfoTitle('Что-то пошло не так! Попробуйте ещё раз.');
-        handleAuthButtonClick();
+        openTooltip();
         console.log(err)
       });
   };
 
-  function hadnleAuthorization(data) {
+  function handleAuthorization(data) {
     auth
       .authorize(data.password, data.email)
       .then((res) => {
@@ -83,8 +85,9 @@ function App() {
         history.push("/");
       })
       .catch((err) => {
-        setInfoImage(Unsuccses);
+        setInfoImage(unsuccess);
         setInfoTitle('Что-то пошло не так! Попробуйте ещё раз.');
+        openTooltip();
         console.log(err)
       });
   };
@@ -129,7 +132,7 @@ function App() {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
   };
 
-  function handleAuthButtonClick() {
+  function openTooltip() {
     setIsInfoTooltipOpen(!isInfoTooltipOpen);
   };
 
@@ -229,7 +232,7 @@ function App() {
             <Register handleRegistration={handleRegistration} />
           </Route>
           <Route path="/sign-in">
-            <Login hadnleAuthorization={hadnleAuthorization} />
+            <Login handleAuthorization={handleAuthorization} />
           </Route>
         </Switch>
         <Footer />
